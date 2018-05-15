@@ -1,0 +1,97 @@
+<html>
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
+    <link href="https://fonts.googleapis.com/css?family=Gloria+Hallelujah" rel="stylesheet">
+    <script src="https://unpkg.com/vue"></script>
+    <style>
+        body{
+            font-family: 'Gloria Hallelujah', cursive;
+            padding: 30px
+        }
+        .del{
+            color: red;
+            cursor: pointer;
+        }
+        li{cursor: pointer;}
+        li:hover{color: #999}
+    </style>
+</head>
+<body>
+
+<div id="app">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h2>{{title}}</h2>
+                <select class="text-center" v-model="selected" @change="listChange()">
+                    <option value=""></option>
+                    <option :value="item.name" v-for="item in items">{{item.name}}</option>
+                </select> {{selected}}
+                <ul>
+                    <li v-for="(item, i) in items">
+                        <span @click="selected = item">{{item.name}}</span>
+                        <span class="del" @click="deleteItem(i)">X</span>
+                    </li>
+                </ul>
+                <hr>
+                <h3 v-if="selected.name">{{selected.desc}}</h3>
+                <h4 v-else>No item was selected.</h4>
+            </div>
+
+            <div class="col-md-4 offset-md-2">
+                <h3>add new item</h3>
+                <div class="form-group">
+                    <input type="text" v-model="newItem.name" placeholder="Name.." class="form-control" >
+                </div>
+                <div class="form-group">
+                    <input type="text" v-model="newItem.desc" placeholder="Desc.." class="form-control" @keyup.enter="insertItem()">
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-primary" @click="insertItem()" :disabled="!newItem.name || !newItem.desc">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="   crossorigin="anonymous"></script>
+<script>
+    class Item {
+        constructor(name, desc){
+            this.name = name
+            this.desc = desc
+        }
+    }
+
+    new Vue({
+        el: '#app',
+        data: {
+            title: 'Hello World!',
+            items: [
+                new Item('muhannad', 'muhannad desc'),
+                new Item('aleks', 'aleks desc'),
+                new Item('bjarn', 'bjarn desc')
+            ],
+            selected: new Item(),
+            newItem: new Item()
+        },
+        methods: {
+            insertItem(){
+                this.items.unshift(this.newItem)
+                this.newItem = new Item()
+            },
+            deleteItem(i){
+                this.items.splice(i, 1)
+                this.selected = new Item()
+            },
+            listChange(){
+                this.items = this.items.filter(function(item) {
+                    return item.name === this.selected
+                })
+            }
+        }
+    })
+</script>
+
+</body>
+</html>

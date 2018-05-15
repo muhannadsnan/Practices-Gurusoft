@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>JQuery ajax</title>
+
+    <style>
+        .load-here{  min-height: 200px; max-height: 600px; overflow-y: scroll}
+        [mb]{margin-bottom: 10px; border-bottom: 1px dashed #ccc;}
+        [red]{color: red;}
+    </style>
+</head>
+<body>
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-4 offset-md-4">
+            <h1>JQuery ajax</h1>
+            <button class="btn btn-primary btn-block" btn-load>LOAD</button>
+            <button class="btn btn-dark btn-block" btn-posts>LOAD POSTS</button>
+            <hr>
+            <div class="load-here card border-secondary mt-3" ajax data-url="https://httpstat.us">
+                <h3 class="text-secondary px-3 py-2" loader>No data loaded.</h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+<script>
+    var loader = '<h3 class="text-secondary px-3 py-2" loader>LOADING...</h3>';
+
+    $('[btn-load]').on('click', function () {
+        $("[ajax]").html(loader);
+        $("[loader]").html("LOADING...");
+        $("[btn-load]").html("LOADING...");
+
+        $.ajax({
+            url: $("[ajax]").data("url"),
+            type: "get",
+            dataType: "html",
+            data: "param=me",
+            cache: false
+        })
+            .done(function (data) {
+                $('[ajax]').html(data);
+                $("[btn-load]").hide();
+            });
+    });
+
+    $('[btn-posts]').on('click', function () {
+        $("[ajax]").html(loader);
+        $("[loader]").html("LOADING...");
+        $('[btn-posts]').html("LOADING..");
+        $.ajax({
+            url: "https://jsonplaceholder.typicode.com/posts",
+            dataType: "jsonp",
+            type: "get"
+        })
+            .done(function (data) {
+                $('[btn-posts]').hide();
+                $("[ajax]").html("");
+                $.each(data, function (i, obj) {
+                    $("[ajax]").append("<h4 mb><span red>"+obj.id+": </span>"+obj.title+"</h4>");
+                });
+            });
+    });
+</script>
+</body>
+</html>
