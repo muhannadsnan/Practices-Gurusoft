@@ -10,21 +10,9 @@ import { ActivatedRoute, Route } from '@angular/router';
   styleUrls: ['./content.component.css']
 })
 export class ContentComponent implements OnInit {
-  categories = [];
+ 
+  ngOnInit(){
 
-
-  constructor(private categoryService: CategoryService,
-              private productService: ProductService,
-              private route: ActivatedRoute){}
-
-  ngOnInit() {
-    this.categories = this.categoryService.categories;
   }
-
-  catChanged(id){
-    // this.route.params.subscribe(params => this.catId = +params['catid']);    
-    this.categoryService.selectedChanged(id); 
-  }
-
 
 }

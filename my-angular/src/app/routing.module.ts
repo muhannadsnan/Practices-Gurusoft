@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
-import { CategoryComponent } from "./category/category.component";
+import { CategoryComponent } from "./categories/category/category.component";
 import { ProductsComponent } from "./products/products.component";
 import { ContentComponent } from "./content/content.component";
 

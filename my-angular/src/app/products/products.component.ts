@@ -19,14 +19,8 @@ export class ProductsComponent implements OnInit {
               private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.catService.catSelected.subscribe((catId) => {
-      this.catId = catId;
-    });
+    this.catService.catSelected.subscribe(catId => this.catId = catId);
     this.route.params.subscribe(params => this.products = this.prodService.getCatProds(+params['catid']));
-    ;
-    
   }
-
-
 
 }

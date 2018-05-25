@@ -1,7 +1,8 @@
-<h3>Categories:</h3>
-<ul>
-  <app-category *ngFor="let cat of categories" [category]="cat" (click)="catChanged(cat?.id)"></app-category>
-</ul>
-
-<app-products></app-products>
-<router-outlet></router-outlet>
+<div class="d-flex">
+	<div class="col-md-3">
+		<app-categories></app-categories>
+	</div>
+	<div class="col-md-9">
+		<router-outlet></router-outlet>		
+	</div>
+</div>

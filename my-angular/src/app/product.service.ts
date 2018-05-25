@@ -7,6 +7,12 @@ export class ProductService {
 		new Product(2, 'passat', this.img, 3),
 		new Product(3, 'ford focus', this.img, 1),
 		new Product(4, 'jeep', this.img, 2),
+		new Product(5, 'hammar', this.img, 2),
+		new Product(6, 'jaquar', this.img, 2),
+		new Product(7, 'toyota', this.img, 3),
+		new Product(8, 'mersedes', this.img, 3),
+		new Product(9, 'bmw', this.img, 3),
+		new Product(10, 'suzuki', this.img, 3),
 	];
 
 	getOneProduct(id){

@@ -1,5 +1,4 @@
-<p *ngFor="let prod of products">
-  {{prod?.title}}
-  <img [src]="prod?.img" alt="">
-</p>
-
+<div class="d-flex justify-content-around flex-wrap"> 
+  <app-product *ngFor="let prod of products" [product]="prod"></app-product>  
+</div>
+ 
