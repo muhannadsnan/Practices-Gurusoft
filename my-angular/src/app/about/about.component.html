@@ -1,0 +1,11 @@
+<hr> 
+
+<label>New Car: 
+  <input #title (keyup.enter)="onAdd(title.value); title.value=''" placeholder="enter a title..">
+</label>
+
+<hr>
+
+<p *ngFor="let item of about">
+  <strong>{{item.title}}</strong>: {{item.date}}
+</p>
