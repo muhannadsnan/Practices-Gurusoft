@@ -1,5 +1,22 @@
-<h3>Categories:</h3>
-<hr>
-<ul>
-  <app-category *ngFor="let cat of categories" [category]="cat" (click)="catChanged(cat?.id)"></app-category>
-</ul>
+<div class="container main">
+  <div class="row">
+    <div class="col-lg-3">
+
+      <h5 class="text-center my-3">Categories</h5>
+      
+      <div class="list-group">
+        <app-category *ngFor="let cat of categories" [category]="cat" (click)="catChanged(cat.id)"></app-category>
+      </div>
+
+    </div>
+    <!-- END: col-lg-3 -->
+
+    <div class="col-lg-9">
+
+      <!-- <h3 *ngIf="selectedCat == 0" class="alert alert-warning">Please select a category!</h3>     -->
+      <router-outlet></router-outlet>
+
+    </div>
+    <!-- END: col-lg-9 -->
+  </div>
+</div>

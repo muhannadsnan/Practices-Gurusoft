@@ -1,4 +1,4 @@
-<li [routerLink]="'/categories/'+category?.id" routerLinkActive="active" class="">
+<a [routerLink]="'/categories/'+category?.id" routerLinkActive="active" class="list-group-item">
   <strong>{{category?.id }}</strong>
   {{category?.title}}
-</li>
+</a>

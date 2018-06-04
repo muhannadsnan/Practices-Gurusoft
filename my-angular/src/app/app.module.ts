@@ -8,7 +8,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppComponent } from './app.component';
 import { NavComponent } from './components/nav/nav.component';
-import { ContentComponent } from './components/content/content.component';
 import { CategoriesComponent } from './components/categories/categories.component';
 import { CategoryComponent } from './components/categories/category/category.component';
 import { ProductsComponent } from './components/products/products.component';
@@ -18,12 +17,13 @@ import { AboutComponent } from './components/about/about.component';
 import { CategoryService } from './services/category.service';
 import { ProductService } from './services/product.service';
 import { DbService } from './DB.service';
+import { HomeComponent } from './components/home/home.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavComponent,
-    ContentComponent,
+    HomeComponent,
     CategoriesComponent,
     CategoryComponent,    
     ProductsComponent,

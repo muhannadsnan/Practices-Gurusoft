@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CategoryService } from '../../services/category.service';
 import { ProductService } from '../../services/product.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-categories',
@@ -10,18 +10,20 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class CategoriesComponent implements OnInit {
   categories = [];
+  selectedCat = 0;
 
   constructor(private categoryService: CategoryService,
-    private productService: ProductService,
-    private route: ActivatedRoute) { }
+              private productService: ProductService,
+              private route: ActivatedRoute,
+              private router: Router) { }
 
   ngOnInit() {
     this.categories = this.categoryService.categories;
   }
 
   catChanged(id) {
-    // this.route.params.subscribe(params => this.catId = +params['catid']);    
-    this.categoryService.selectedChanged(id);
+    this.selectedCat = id;
+    // this.categoryService.selectedChanged(id);
   }
 
 }

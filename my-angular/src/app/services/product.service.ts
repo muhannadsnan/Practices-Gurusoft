@@ -15,6 +15,10 @@ export class ProductService {
 		new Product(10, 'suzuki', this.img, 3),
 	];
 
+	getAllProducts(){
+		return this.products;
+	}
+
 	getOneProduct(id){
 		return this.products.filter(prod => prod.id == id);
 	}

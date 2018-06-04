@@ -12,15 +12,32 @@ import { CategoryService } from '../../services/category.service';
 export class ProductsComponent implements OnInit {
   tmp;
   catId = 0;
-  products = [];
+  products: any = [];
 
   constructor(private prodService: ProductService, 
               private catService: CategoryService,
               private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.catService.catSelected.subscribe(catId => this.catId = catId);
-    this.route.params.subscribe(params => this.products = this.prodService.getCatProds(+params['catid']));
+    //this.catService.catSelected.subscribe(catId => this.catId = catId);
+    this.route.params.subscribe(params => {
+      // console.log(params['catid']);
+      if(typeof params['catid'] === 'undefined') {
+        this.products = this.readAllProds();
+        this.catId = 0;
+      }else{
+        this.products = this.readProd(+params['catid']);
+        this.catId = +params['catid'];
+      }
+    });
+  }
+
+  readAllProds() {
+    return this.prodService.getAllProducts();
+  }
+
+  readProd(id) {
+    return this.prodService.getCatProds(id);
   }
 
 }
