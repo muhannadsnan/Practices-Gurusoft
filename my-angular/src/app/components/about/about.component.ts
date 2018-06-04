@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DbService } from '../DB.service';
+import { DbService } from '../../DB.service';
 import { of } from 'rxjs';
 import { tap } from 'rxjs/operators';
 

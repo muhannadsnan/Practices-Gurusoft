@@ -3,18 +3,20 @@ import { NgModule } from '@angular/core';
 
 import { RoutingModule } from './routing.module';
 import { HttpClientModule } from '@angular/common/http';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 
 import { AppComponent } from './app.component';
-import { NavComponent } from './nav/nav.component';
-import { ContentComponent } from './content/content.component';
-import { CategoriesComponent } from './categories/categories.component';
-import { CategoryComponent } from './categories/category/category.component';
-import { ProductsComponent } from './products/products.component';
-import { ProductComponent } from './products/product/product.component';
-import { AboutComponent } from './about/about.component';
+import { NavComponent } from './components/nav/nav.component';
+import { ContentComponent } from './components/content/content.component';
+import { CategoriesComponent } from './components/categories/categories.component';
+import { CategoryComponent } from './components/categories/category/category.component';
+import { ProductsComponent } from './components/products/products.component';
+import { ProductComponent } from './components/products/product/product.component';
+import { AboutComponent } from './components/about/about.component';
 
-import { CategoryService } from './category.service';
-import { ProductService } from './product.service';
+import { CategoryService } from './services/category.service';
+import { ProductService } from './services/product.service';
 import { DbService } from './DB.service';
 
 @NgModule({
@@ -31,7 +33,8 @@ import { DbService } from './DB.service';
   imports: [
     BrowserModule,
     RoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    NgbModule.forRoot()
   ],
   providers: [CategoryService, ProductService, DbService],
   bootstrap: [AppComponent]

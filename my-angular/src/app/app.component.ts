@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Category } from './models/category';
+import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-root',

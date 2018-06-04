@@ -1,4 +1,4 @@
-import { Product } from "./models/product";
+import { Product } from "../models/product";
 
 export class ProductService {
 	img = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQIK2gOCXVAHf8RDFQPSDp95y-gzk5RxlVVRDLzd5NHucLrYIlwhw";
