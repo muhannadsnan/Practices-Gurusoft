@@ -21,4 +21,12 @@ export class CategoryComponent implements OnInit {
   ngOnInit() {
   }
 
+  onDelCat(key){
+    this.categoryService.destroyCat(key);
+  }
+
+  onClickCat(){
+    this.categoryService.selectedChanged(this.category);
+  }
+
 }

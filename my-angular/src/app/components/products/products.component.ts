@@ -19,16 +19,19 @@ export class ProductsComponent implements OnInit {
               private route: ActivatedRoute) { }
 
   ngOnInit() {
-    //this.catService.catSelected.subscribe(catId => this.catId = catId);
     this.route.params.subscribe(params => {
-      // console.log(params['catid']);
       if(typeof params['catid'] === 'undefined') {
         this.products = this.readAllProds();
         this.catId = 0;
       }else{
-        this.products = this.readProd(+params['catid']);
+        this.products = this.readProd(params['catid']); 
         this.catId = +params['catid'];
       }
+    });// for å kunne vise meldingen "velg en kategori" kan vi bruke Subject her for å informere CategoriesCopmonent at det er en valgt kategori.
+
+    // LISTEN TO SELECTING A CATEGORY TO TAKE PRODUCTS FROM THE SUBJECT
+    this.catService.selectedCategory.subscribe(selectedCat => { 
+      this.products = typeof selectedCat.products === 'undefined' ? []: Object.values(selectedCat.products); console.log(this.products);
     });
   }
 
@@ -37,7 +40,7 @@ export class ProductsComponent implements OnInit {
   }
 
   readProd(id) {
-    return this.prodService.getCatProds(id);
+     this.catService.getCatProds(id);
   }
 
 }

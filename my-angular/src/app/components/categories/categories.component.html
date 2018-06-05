@@ -3,9 +3,13 @@
     <div class="col-lg-3">
 
       <h5 class="text-center my-3">Categories</h5>
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="enter category..." #catTitle (keyup.enter)="onAddCat()">
+      </div>
       
       <div class="list-group">
-        <app-category *ngFor="let cat of categories" [category]="cat" (click)="catChanged(cat.id)"></app-category>
+        <app-category *ngFor="let cat of categories | async" [category]="cat" (click)="catChanged(cat.id)"></app-category>
+        <h3 *ngIf="loadingCats && false">LOADING..</h3>
       </div>
 
     </div>

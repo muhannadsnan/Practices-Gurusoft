@@ -1,5 +1,10 @@
-<!-- <h3 class="alert alert-warning text-center" *ngIf="catId == 0">Please select a category</h3>  -->
-
-<div class="d-flex justify-content-around flex-wrap"> 
-  <app-product *ngFor="let prod of products" [product]="prod"></app-product>  
+<div class="d-flex justify-content-around flex-wrap" > 
+  <ng-template *ngIf="products?.length > 0; else noItems">
+    <app-product *ngFor="let prod of products" [product]="prod"></app-product>    
+  </ng-template>
 </div>
+
+
+<ng-template #noItems>
+  <p class="alert alert-info w-100 mt-2 text-center">No Prods.</p>
+</ng-template>

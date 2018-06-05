@@ -1,6 +1,5 @@
 export class Product {
-	constructor(public id: number,
-				public title: String,
+	constructor(public title: String,
 				public img: String, 
-				public cat: number){}
+				public catid: number){}
 }

@@ -1,4 +1,5 @@
-<a [routerLink]="'/categories/'+category?.id" routerLinkActive="active" class="list-group-item">
-  <strong>{{category?.id }}</strong>
-  {{category?.title}}
+<a [routerLink]="'/categories/'+category.key" routerLinkActive="active" class="list-group-item d-flex" (click)="onClickCat()">
+  <span>{{category.title}}</span>
+  <!-- <small>{{category.key}}</small> -->
+  <button class="btn btn-outline-warning ml-auto" (click)="onDelCat(category.key)">Delete</button>
 </a>

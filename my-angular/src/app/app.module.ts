@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { RoutingModule } from './routing.module';
 import { HttpClientModule } from '@angular/common/http';
+import { HttpModule } from '@angular/http'; 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
@@ -16,8 +17,11 @@ import { AboutComponent } from './components/about/about.component';
 
 import { CategoryService } from './services/category.service';
 import { ProductService } from './services/product.service';
-import { DbService } from './DB.service';
+import { DbService } from './services/DB.service';
 import { HomeComponent } from './components/home/home.component';
+import { AngularFireDatabase, AngularFireDatabaseModule } from 'angularfire2/database';
+import { AngularFireModule } from 'angularfire2';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -34,7 +38,11 @@ import { HomeComponent } from './components/home/home.component';
     BrowserModule,
     RoutingModule,
     HttpClientModule,
-    NgbModule.forRoot()
+    HttpModule,
+    NgbModule.forRoot(),
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireDatabaseModule, //---- for database 
+    // AngularFireAuthModule < ---- for auth
   ],
   providers: [CategoryService, ProductService, DbService],
   bootstrap: [AppComponent]

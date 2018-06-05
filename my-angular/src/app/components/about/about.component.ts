@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { DbService } from '../../DB.service';
 import { of } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { DbService } from '../../services/DB.service';
 
 @Component({
   selector: 'app-about',
