@@ -13,7 +13,7 @@ import { Observable } from '@firebase/util';
 export class ProductsComponent implements OnInit {
   tmp;
   catId;
-  categories: Observable<any[]>;
+  products: Observable<any[]>;
   loadingProds = true;
 
   constructor(private catService: CategoryService,
