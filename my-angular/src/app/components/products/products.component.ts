@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../../services/product.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CategoryService } from '../../services/category.service';
+import { Observable } from '@firebase/util';
 
 @Component({
   selector: 'app-products',
@@ -12,7 +13,7 @@ import { CategoryService } from '../../services/category.service';
 export class ProductsComponent implements OnInit {
   tmp;
   catId;
-  products;
+  categories: Observable<any[]>;
   loadingProds = true;
 
   constructor(private catService: CategoryService,

@@ -7,11 +7,9 @@ import { Category } from "../models/category";
 @Injectable()
 
 export class CategoryService {
-	categories: Observable<any[]>;
 	catCollection: AngularFirestoreCollection<any>;
 	selectedCategory: Subject<any> = new Subject<any>(); 
 	
-	products: Observable<any[]>;
 	prodCollection: AngularFirestoreCollection<any>;
 
 	loadingCats: Subject<boolean> = new Subject<boolean>(); 

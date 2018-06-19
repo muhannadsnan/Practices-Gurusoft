@@ -3,6 +3,7 @@ import { CategoryService } from '../../services/category.service';
 import { ProductService } from '../../services/product.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Category } from '../../models/category';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-categories',
@@ -11,7 +12,7 @@ import { Category } from '../../models/category';
 })
 
 export class CategoriesComponent implements OnInit {
-  categories;
+  categories: Observable<any[]>;
   selectedCat = 0;
   loadingCats;
   
