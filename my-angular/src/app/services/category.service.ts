@@ -1,56 +1,65 @@
-import { Category } from "../models/category";
-import { Injectable, EventEmitter } from "@angular/core";
-import { ProductService } from "./product.service";
-import { HttpClient } from "@angular/common/http";
-import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
+import { Injectable } from "@angular/core";
+import { AngularFirestore, AngularFirestoreCollection } from "angularfire2/firestore";
 import { Observable, Subject } from "rxjs";
-import { map } from 'rxjs/operators';
+import { map } from "rxjs/operators";
+import { Category } from "../models/category";
 
 @Injectable()
 
 export class CategoryService {
-	catRef: AngularFireList<any>;
 	categories: Observable<any[]>;
-	// catSelected: EventEmitter<any> = new EventEmitter();
-	selectedCategory = new Subject<any>();
-
-	constructor(private http: HttpClient,
-				private db: AngularFireDatabase){
-		this.catRef = db.list('categories');
-		// this.categories = this.db.list<Category>('/categories').valueChanges(); // correct but without keys
-		this.categories = this.catRef.snapshotChanges().pipe(
-			map(changes => {
-				return changes.map(c => ({key: c.payload.key, ...c.payload.val()}));
-			})
-		);
-	}
+	catCollection: AngularFirestoreCollection<any>;
+	selectedCategory: Subject<any> = new Subject<any>(); 
 	
-	getCats(){
-		return this.categories;
+	products: Observable<any[]>;
+	prodCollection: AngularFirestoreCollection<any>;
+
+	loadingCats: Subject<boolean> = new Subject<boolean>(); 
+	loadingProds: Subject<boolean> = new Subject<boolean>(); 
+
+	constructor(private firestore: AngularFirestore){
+		this.catCollection = this.firestore.collection('categories');
+		this.prodCollection = this.firestore.collection('products');
+	}
+
+	readCats() {
+		//return this.firestore.collection('categories').valueChanges(); // without maping IDs
+		this.loadingCats.next(true);
+		return this.MAP(this.catCollection.snapshotChanges());
 	}
 
 	createCat(newCat){
-		this.catRef.push(newCat)
+		return this.catCollection.add(newCat);
 	}
 
-	destroyCat(key){
-		this.catRef.remove(key);
+	destroyCat(catid){
+		this.catCollection.doc(catid).delete()
+			.then(_ => console.log("Document successfully deleted!"))
+			.catch(error => console.error("Error removing document: ", error))
 	}
 
-	selectedChanged( sCat/*, catId */) {
-		// this.catSelected.emit(catId);
-		this.selectedCategory.next(sCat);
+	readProdsByCatId(catid) {
+		this.loadingProds.next(true);		
+		return this.MAP(this.firestore.collection('products', ref => ref.where('catid', '==', catid)).snapshotChanges());
 	}
 
-	getCatProds(key) {
-		// return this.catRef.query.orderByKey().equalTo(key);
-		// console.log("getCatProds", this.db.list('/categories', {query: {orderByKey, equalTo: key}}))
-		const ref = this.db.list('/categories/'+key);
-		let x = ref.snapshotChanges().pipe(
-			map(changes => {
-				return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
+	readAllProducts(){
+		return this.MAP(this.prodCollection.snapshotChanges());
+	}
+	
+	
+	
+	MAP(observable: Observable<any[]>){
+		return observable.pipe(
+			map(actions => {
+				this.loadingCats.next(false);
+				this.loadingProds.next(false);	
+				return actions.map(a => {
+					const data = a.payload.doc.data();
+					const id = a.payload.doc.id;									
+					return { id, ...data };
+				})
 			})
 		);
-		console.log("getCatProds", x);		
 	}
 }

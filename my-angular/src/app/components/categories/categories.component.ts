@@ -13,26 +13,35 @@ import { Category } from '../../models/category';
 export class CategoriesComponent implements OnInit {
   categories;
   selectedCat = 0;
-  loadingCats = true;
+  loadingCats;
+  
   @ViewChild('catTitle') catTitle: ElementRef;
 
   constructor(private categoryService: CategoryService,
-              private productService: ProductService,
               private route: ActivatedRoute,
               private router: Router) { }
 
   ngOnInit() {
-    this.categories = this.categoryService.getCats();
+    this.isLoadingCats();
+    this.getCats();
   }
 
-  catChanged(id) {
-    this.selectedCat = id;
-    // this.categoryService.selectedChanged(id);
+  catChanged(cat) {
+    this.selectedCat = cat.id;
+    this.categoryService.selectedCategory.next(cat);
   }
 
   onAddCat(){ 
-    this.categoryService.createCat(new Category(this.catTitle.nativeElement.value));
+    this.categoryService.createCat({ name: this.catTitle.nativeElement.value});
     this.catTitle.nativeElement.value = '';
+  }
+
+  getCats(){
+    this.categories = this.categoryService.readCats();
+  }
+
+  isLoadingCats(){
+    this.categoryService.loadingCats.subscribe(isLoading => this.loadingCats = isLoading);
   }
 
 }

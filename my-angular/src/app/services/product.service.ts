@@ -4,36 +4,29 @@ import { AngularFireList, AngularFireDatabase } from "angularfire2/database";
 import { map } from "rxjs/operators";
 import { ActivatedRoute } from "@angular/router";
 import { Injectable } from "@angular/core";
+import { AngularFirestoreCollection, AngularFirestore } from "angularfire2/firestore";
 
 @Injectable()
 
 export class ProductService {
-	img = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQIK2gOCXVAHf8RDFQPSDp95y-gzk5RxlVVRDLzd5NHucLrYIlwhw";
-	prodRef: AngularFireList<any>
-	products: Observable<any[]>;
-	catID: string;
 
-	constructor(db: AngularFireDatabase, route: ActivatedRoute){
-		route.params.subscribe(params => {
-			this.catID = params['catid']; console.log(this.catID);
-			this.prodRef = db.list("/categories/" + this.catID + "/products");
-		});
-				
+
+	constructor(private firebase: AngularFirestore){}
+
+	readAllProds(){
+
 	}
 
-	getAllProducts(){
-		return this.products;
-	}
 
-	getOneProduct(id){
-		//return this.products.filter(prod => prod.id == id);
-	}
-
-	getCatProds(key){
-		this.catID = key;
-		this.products = this.prodRef.snapshotChanges().pipe(
-			map(changes => { return changes.map(c => ({ key: c.payload.key, ...c.payload.val() })) })
-		);
-		return this.products;
+	MAP(observable: Observable<any[]>) {
+		return observable.pipe(
+			map(actions => {
+				return actions.map(a => {
+					const data = a.payload.doc.data();
+					const id = a.payload.doc.id;
+					return { id, ...data };
+				})
+			})
+		)
 	}
 }

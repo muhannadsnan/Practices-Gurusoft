@@ -1,10 +1,12 @@
+<!-- catID: {{catId}} -->
+<pre><small>{{products | async | json}}</small></pre>
+
+<h3 *ngIf="loadingProds">Loading products..</h3>
+
 <div class="d-flex justify-content-around flex-wrap" > 
-  <ng-template *ngIf="products?.length > 0; else noItems">
-    <app-product *ngFor="let prod of products" [product]="prod"></app-product>    
-  </ng-template>
+  <app-product *ngFor="let prod of products | async" [product]="prod"></app-product>
 </div>
 
-
-<ng-template #noItems>
+<h3 *ngIf="false">
   <p class="alert alert-info w-100 mt-2 text-center">No Prods.</p>
-</ng-template>
+</h3>

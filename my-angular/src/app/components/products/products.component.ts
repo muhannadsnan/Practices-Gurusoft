@@ -11,36 +11,47 @@ import { CategoryService } from '../../services/category.service';
 
 export class ProductsComponent implements OnInit {
   tmp;
-  catId = 0;
-  products: any = [];
+  catId;
+  products;
+  loadingProds = true;
 
-  constructor(private prodService: ProductService, 
-              private catService: CategoryService,
+  constructor(private catService: CategoryService,
               private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.route.params.subscribe(params => {
-      if(typeof params['catid'] === 'undefined') {
-        this.products = this.readAllProds();
-        this.catId = 0;
-      }else{
-        this.products = this.readProd(params['catid']); 
-        this.catId = +params['catid'];
-      }
-    });// for å kunne vise meldingen "velg en kategori" kan vi bruke Subject her for å informere CategoriesCopmonent at det er en valgt kategori.
+    this.isLoadingProds();
+    this.LISTEN_CategorySelected();
+    this.LISTEN_Route();
+  }
 
-    // LISTEN TO SELECTING A CATEGORY TO TAKE PRODUCTS FROM THE SUBJECT
-    this.catService.selectedCategory.subscribe(selectedCat => { 
-      this.products = typeof selectedCat.products === 'undefined' ? []: Object.values(selectedCat.products); console.log(this.products);
+  LISTEN_CategorySelected(){
+     /* LISTEN TO SELECTING A CATEGORY TO TAKE PRODUCTS FROM THE SUBJECT */
+    this.catService.selectedCategory.subscribe(selectedCat => { //console.log("selectedCat", selectedCat);
+      //this.products = typeof selectedCat.products === 'undefined' ? [] : Object.values(selectedCat.products); // cat collection contains prods array
+      this.getCatProds(selectedCat.id); //console.log("hiii ", selectedCat);
     });
   }
 
-  readAllProds() {
-    return this.prodService.getAllProducts();
+  LISTEN_Route(){
+    // this.catId = this.route.snapshot.params.catid; console.log("snapshot", this.catId);
+    this.route.params.subscribe(params => {
+      this.catId = params['catid'];
+      //if (typeof this.catId === 'undefined') console.log("catid", 'empty '); else console.log("catid", 'not empty: ' + this.catId);
+      this.products = (typeof this.catId === 'undefined') ? this.readAllProds() : this.getCatProds(this.catId);
+    }); /*  for å kunne vise meldingen "velg en kategori" kan vi bruke Subject her for å informere CategoriesCopmonent at det er en valgt kategori. */
   }
 
-  readProd(id) {
-     this.catService.getCatProds(id);
+  isLoadingProds() {
+    this.catService.loadingProds.subscribe(isLoading => this.loadingProds = isLoading);
+  }
+
+  readAllProds() {
+    return this.catService.readAllProducts();
+  }
+
+  getCatProds(catid) {
+    console.log("--- getCatProds ");
+    return this.catService.readProdsByCatId(catid);
   }
 
 }

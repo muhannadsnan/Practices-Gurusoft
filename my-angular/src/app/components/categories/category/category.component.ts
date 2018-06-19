@@ -13,10 +13,7 @@ export class CategoryComponent implements OnInit {
 
   @Input() category: Category;
 
-  constructor(private route: ActivatedRoute,
-              private router: Router,
-              private categoryService: CategoryService,
-              private productService: ProductService,) { }
+  constructor(private categoryService: CategoryService) { }
 
   ngOnInit() {
   }
@@ -26,7 +23,7 @@ export class CategoryComponent implements OnInit {
   }
 
   onClickCat(){
-    this.categoryService.selectedChanged(this.category);
+    this.categoryService.selectedCategory.next(this.category);
   }
 
 }
