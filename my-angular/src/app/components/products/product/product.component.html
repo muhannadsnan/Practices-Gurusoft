@@ -1,9 +1,23 @@
 <div class="card m-2">
-  <img class="card-img-top" [src]="product.img" alt="Card image cap">
+  <img class="card-img-top" [src]="cloudinaryUrl + product.img" alt="Card image cap">
   <div class="card-body">
-    <h5 class="card-title">{{product.title}}</h5>
-    <p class="card-text">{{product.desc}}</p>
-    <h3 class="card-text">${{product.price}}</h3>
+    <button class="btn btn-success float-right" (click)="toggleEditing()">{{!editing.enabled ? 'enable edit': 'done'}} </button>
+
+    <h5 class="card-title">
+      <span *ngIf="!editing.title" (dblclick)="editTitle()">{{product.title}}</span>
+      <input type="text" [hidden]="!(editing.enabled && editing.title)" #txtEditTitle [value]="product.title">      
+    </h5>
+
+    <p class="card-text">
+      <span *ngIf="!editing.desc" (dblclick)="editDesc()">{{product.desc}}</span>
+      <input type="text" [hidden]="!(editing.enabled && editing.desc)" #txtEditDesc [value]="product.desc">      
+    </p>
+
+    <h3 class="card-text">
+      <span *ngIf="!editing.price" (dblclick)="editPrice()">${{product.price}}</span>
+      <input type="text" [hidden]="!(editing.enabled && editing.price)" #txtEditPrice [value]="product.price">
+    </h3>
+
     <a href="#" class="btn btn-primary">Go somewhere</a>
   </div>
 </div>

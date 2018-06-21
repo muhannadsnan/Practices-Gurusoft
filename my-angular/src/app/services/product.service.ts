@@ -10,12 +10,18 @@ import { AngularFirestoreCollection, AngularFirestore } from "angularfire2/fires
 
 export class ProductService {
 
+	prodCollection: AngularFirestoreCollection<any>;
 
-	constructor(private firebase: AngularFirestore){}
 
-	readAllProds(){
-
+	constructor(private firestore: AngularFirestore){
+		//this.prodCollection = firestore.collection('');
 	}
+
+	updateProduct(newProd){console.log(newProd.id);
+		this.firestore.doc('products/' + newProd.id).update(Object.assign({}, newProd));
+	}
+
+
 
 
 	MAP(observable: Observable<any[]>) {
