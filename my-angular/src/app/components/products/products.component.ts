@@ -13,7 +13,7 @@ import { Observable } from '@firebase/util';
 export class ProductsComponent implements OnInit {
   tmp;
   catId;
-  products: Observable<any[]>;
+  products;
   loadingProds = true;
 
   constructor(private catService: CategoryService,
@@ -38,7 +38,7 @@ export class ProductsComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.catId = params['catid'];
       //if (typeof this.catId === 'undefined') console.log("catid", 'empty '); else console.log("catid", 'not empty: ' + this.catId);
-      this.products = (typeof this.catId === 'undefined') ? this.readAllProds() : this.getCatProds(this.catId);
+      this.products = (typeof this.catId === 'undefined') ? this.getAllProds() : this.getCatProds(this.catId);
     }); /*  for å kunne vise meldingen "velg en kategori" kan vi bruke Subject her for å informere CategoriesCopmonent at det er en valgt kategori. */
   }
 
@@ -46,12 +46,12 @@ export class ProductsComponent implements OnInit {
     this.catService.loadingProds.subscribe(isLoading => this.loadingProds = isLoading);
   }
 
-  readAllProds() {
+  getAllProds() {
     return this.catService.readAllProducts();
   }
 
   getCatProds(catid) {
-    console.log("--- getCatProds ");
+    //console.log("--- getCatProds ");
     return this.catService.readProdsByCatId(catid);
   }
 

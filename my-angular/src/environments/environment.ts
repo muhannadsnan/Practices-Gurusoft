@@ -12,6 +12,9 @@ export const environment = {
     storageBucket: "test-firebase-597da.appspot.com",
     messagingSenderId: "344609221856"
   },
+  cloudinary: {
+    url: 'http://res.cloudinary.com/msn/image/upload/'
+  }
 };
 
 /*
