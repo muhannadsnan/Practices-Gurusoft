@@ -15,6 +15,8 @@ export class CategoryService {
 	loadingCats: Subject<boolean> = new Subject<boolean>(); 
 	loadingProds: Subject<boolean> = new Subject<boolean>(); 
 
+	isLoggedin = false;
+
 	constructor(private firestore: AngularFirestore){
 		this.catCollection = this.firestore.collection('categories');
 		this.prodCollection = this.firestore.collection('products');

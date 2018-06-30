@@ -5,12 +5,13 @@ import { CategoriesComponent } from "./components/categories/categories.componen
 import { CategoryComponent } from "./components/categories/category/category.component";
 import { ProductsComponent } from "./components/products/products.component";
 import { AboutComponent } from "./components/about/about.component";
+import { AuthGuard } from "./services/auth.guard";
 
 const routes = [
-	{path: '', redirectTo: '/Home', pathMatch: 'full'},
-	{ path: 'Home', component: HomeComponent },	
-	{ path: 'Home/:name', component: HomeComponent },	
-	{path: 'categories', component: CategoriesComponent, children: [
+	{path: '', redirectTo: '/home', pathMatch: 'full'},
+	{ path: 'home', component: HomeComponent },	
+	{ path: 'home/:name', component: HomeComponent },	
+	{path: 'categories', component: CategoriesComponent, canActivate: [AuthGuard], children: [
 			{path: ':catid', component: ProductsComponent}
 		]
 	},
