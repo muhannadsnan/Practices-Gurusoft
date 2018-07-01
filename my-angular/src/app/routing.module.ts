@@ -15,7 +15,7 @@ const routes = [
 			{path: ':catid', component: ProductsComponent}
 		]
 	},
-	{ path: 'products', component: ProductsComponent},
+	{ path: 'products', component: ProductsComponent, data: {show: 3}},
 	{path: 'about', component: AboutComponent}
 ];
 

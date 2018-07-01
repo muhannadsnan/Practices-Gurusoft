@@ -4,7 +4,7 @@
 <h3 *ngIf="loadingProds">Loading products..</h3>
 
 <div class="d-flex justify-content-around flex-wrap" > 
-  <app-product *ngFor="let prod of products | async" [product]="prod"></app-product>
+  <app-product *ngFor="let prod of products | async" [product]="prod" [ngClass]="{'col-md-6': show == 2, 'col-md-4': show == 3}"></app-product>
 </div>
 
 <h3 *ngIf="false">

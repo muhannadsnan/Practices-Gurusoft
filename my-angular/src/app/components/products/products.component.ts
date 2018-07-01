@@ -15,6 +15,7 @@ export class ProductsComponent implements OnInit {
   catId;
   products;
   loadingProds = true;
+  show = 2;
 
   constructor(private catService: CategoryService,
               private route: ActivatedRoute) { }
@@ -23,6 +24,7 @@ export class ProductsComponent implements OnInit {
     this.isLoadingProds();
     this.LISTEN_CategorySelected();
     this.LISTEN_Route();
+    this.LISTEN_Route_data();
   }
 
   LISTEN_CategorySelected(){
@@ -40,6 +42,15 @@ export class ProductsComponent implements OnInit {
       //if (typeof this.catId === 'undefined') console.log("catid", 'empty '); else console.log("catid", 'not empty: ' + this.catId);
       this.products = (typeof this.catId === 'undefined') ? this.getAllProds() : this.getCatProds(this.catId);
     }); /*  for å kunne vise meldingen "velg en kategori" kan vi bruke Subject her for å informere CategoriesCopmonent at det er en valgt kategori. */
+  }
+
+  LISTEN_Route_data(){
+    this.route.data.subscribe(data => {  console.log("data.show ", data);
+      if(data.show)
+        this.show = data.show;
+      else
+        this.show = 2;
+    });
   }
 
   isLoadingProds() {
